@@ -1,5 +1,10 @@
-<title>Java Getting Started on Heroku</title>
-<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<title>Single Label Example - jsreports</title>
+<meta charset="utf-8">
+<!--Favicon-->
+<link rel="shortcut icon" href="/images/clip32.png" title="Favicon" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700,700italic,400italic,300italic' rel='stylesheet' type='text/css'>
+<link href="/css/tomorrow-night-eighties.css" rel="stylesheet" type='text/css' />
+<link href="/lib/jsreports/jsreports-all.min.css" rel="stylesheet" type='text/css' />
+<link href="/css/main.css" rel="stylesheet" type='text/css' />
+<meta name=viewport content="width=device-width, initial-scale=1">
+

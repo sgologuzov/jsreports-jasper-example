@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">/*
+ * jsreports {{VERSION}}
+ * Copyright (c) {{YEAR}} jsreports
+ * http://jsreports.com
+ */
+(function() {
+
+function transformDs(ds) {
+    if (ds.store) {
+        ds.extjsStore = ds.store;
+        delete ds.store;
+    }
+    if (ds.schemaUrl) {
+        ds.schema_url = ds.schemaUrl;
+        delete ds.schemaUrl;
+    }
+    return ds;
+}
+
+<span id='Jsreports-Viewer'>/**
+</span> * A report viewer.
+ */
+Ext.define(&#39;Jsreports.Viewer&#39;, {
+    extend: &#39;Ext.panel.Panel&#39;,
+    alias: &#39;widget.reportviewer&#39;,
+    config: {
+<span id='Jsreports-Viewer-cfg-report'>        /**
+</span>         * The report definition object to edit in the designer.  When not provided, a blank default report
+         * will be created.
+         */
+        report: null,
+<span id='Jsreports-Viewer-cfg-dataSources'>        /**
+</span>         * The set of data sources that are available for use by reports.  See {@link Jsreports.Designer#cfg-dataSources}
+         */
+        dataSources: [],
+<span id='Jsreports-Viewer-cfg-cls'>        cls: &#39;jsr-report-viewer&#39;,
+</span>    },
+<span id='Jsreports-Viewer-method-constructor'>    constructor: function() {
+</span>        this.callParent(arguments);
+        this.dataSources.forEach(transformDs);
+    },
+<span id='Jsreports-Viewer-method-onRender'>    onRender: function() {
+</span>        this.callParent(arguments);
+        if (this.report) {
+            this.setReport(report);
+        }
+    },
+<span id='Jsreports-Viewer-method-setReport'>    setReport: function(report) {
+</span>        this.report = report;
+        this.renderReport();
+    },
+<span id='Jsreports-Viewer-method-renderReport'>    renderReport: function() {
+</span>        jsreports.render({
+            target: this.body.dom,
+            report_def: this.report,
+            datasets: this.dataSources
+        });
+    }
+});
+
+<span id='Jsreports-Designer'>/**
+</span> * A drag-and-drop report designer component for creating and editing report definitions.
+ * 
+ * {@img jsreports-designer-overview.png Screenshot of the jsreports designer}
+ *
+ *     // This store&#39;s Model will provide a data schema for the designer to use
+ *     var store = Ext.create(&#39;Ext.data.Store&#39;, {
+ *         model: &#39;TimeEntry&#39;,
+ *         proxy: {
+ *             type: &#39;ajax&#39;,
+ *             url: &#39;../data/time-data.json&#39;,
+ *             reader: {
+ *                 type: &#39;json&#39;,
+ *                 totalProperty: &#39;total&#39;
+ *             }
+ *         }
+ *     });
+ *     
+ *     var designer = Ext.create(&#39;Jsreports.Designer&#39;, {
+ *         id: &#39;designer&#39;,
+ *         dataSources: [{
+ *             id: &quot;time&quot;,
+ *             name: &quot;Time&quot;,
+ *             store: store
+ *         }]
+ *     });
+ */
+Ext.define(&#39;Jsreports.Designer&#39;, {
+    extend: &#39;Ext.panel.Panel&#39;,
+    alias: &#39;widget.reportdesigner&#39;,
+    config: {
+<span id='Jsreports-Designer-cfg-report'>        /**
+</span>         * @cfg {object} report
+         * The report definition object to edit in the designer.  When not provided, a blank default report
+         * will be created.
+         */
+        report: null,
+<span id='Jsreports-Designer-cfg-dataSources'>        /**
+</span>         * @cfg {array} dataSources The set of data sources that are available for use in reports.  For the designer, each data source config must contain at least a schema or schemaUrl property; the data itself is optional.  The properties for each data source config object are listed below.
+         * 
+         * @cfg {string} dataSources.id (required) The unique id that will be used to refer to this data source in reports.
+         * 
+         * @cfg {string} dataSources.name (required) The human-friendly name to show in the designer when this data source appears as an option to select.
+         * 
+         * @cfg {Ext.data.Store} dataSources.store The data store that provides the records for this data source.  The store&#39;s model (from its proxy) will be
+         * used as the schema for the records.
+         * 
+         * @cfg {Array} dataSources.data
+         * Optionally, you can pass a literal array of objects as the data for this data source.  When present, this
+         * property will be used instead of the &quot;store&quot; and &quot;url&quot; properties.
+         *
+         * @cfg {string} dataSources.url
+         * A URL from which the JSON array of data can be fetched.  Will be used if &quot;data&quot; and &quot;store&quot; are not present.
+         *
+         * @cfg {Object} dataSources.schema
+         * An object containing a &quot;fields&quot; property which is an array of field definitions, each with a &quot;name&quot; and &quot;type&quot;
+         * property, where &quot;type&quot; is one of: text, number, boolean, date.  Not required if either &quot;store&quot; or &quot;schemaUrl&quot; is
+         * present.
+         *
+         * @cfg {string} dataSources.schemaUrl
+         * A URL from which the schema can be fetched.  Will be used if &quot;store&quot; and &quot;schema&quot; are not present.
+         */
+        dataSources: [],
+<span id='Jsreports-Designer-cfg-cls'>        cls: &#39;jsr-designer&#39;,
+</span>    },
+<span id='Jsreports-Designer-method-constructor'>    constructor: function() {
+</span>        this.callParent(arguments);
+        this.dataSources.forEach(transformDs);
+    },
+<span id='Jsreports-Designer-method-onRender'>    onRender: function() {
+</span>        this.callParent(arguments);
+        this.designer = new jsreports.Designer({
+            embedded: true,
+            container: this.body.dom,
+            data_sources: this.dataSources || [],
+            report: this.report || null
+        });
+        $(this.designer).on(&#39;save&#39;, this.onDesignerSave.bind(this));
+    },
+<span id='Jsreports-Designer-method-onResize'>    onResize: function() {
+</span>        this.designer.reposition();
+    },
+<span id='Jsreports-Designer-method-setReport'>    setReport: function(report) {
+</span>        return this.designer.setReport(report);
+    },
+<span id='Jsreports-Designer-method-getReport'>    getReport: function() {
+</span>        return this.designer.getReport();
+    },
+<span id='Jsreports-Designer-method-onDesignerSave'>    onDesignerSave: function(reportJson) {
+</span><span id='Jsreports-Designer-event-save'>        /**
+</span>        * @event
+        * Fired when the user saves the report in the designer.
+        * @param {Ext.Component} this
+        * @param {object} report The report definition object.
+        */
+        this.fireEvent(&#39;save&#39;, this, JSON.parse(reportJson));
+    }
+});
+
+<span id='Jsreports-Exporter'>/**
+</span> * Provides the ability to generate report files and download them without displaying them on-screen.
+ */
+Ext.define(&#39;Jsreports.Exporter&#39;, {
+    statics: {
+<span id='Jsreports-Exporter-static-method-export'>        /**
+</span>         * Generates a report to a file in the browser and downloads it.
+         * @param {object} cfg 
+         * @param {object} cfg.report The report definition object to render
+         * @param {string} cfg.dataSources The available data sources for the report to use; see {@link Jsreports.Designer#cfg-dataSources}
+         * @param {string} cfg.format The file format to generate.  One of &quot;pdf&quot;, &quot;xlsx&quot;
+         * @param {string} cfg.filename Optional filename for the downloaded file; if not provided, the report title will be used
+         */
+        export: function(cfg) {
+            jsreports.export({
+                report_def: cfg.report,
+                datasets: cfg.dataSources,
+                format: cfg.format,
+                filename: cfg.filename
+            });
+        }
+    }
+});
+
+}());</pre>
+</body>
+</html>
