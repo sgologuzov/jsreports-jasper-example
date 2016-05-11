@@ -13,8 +13,8 @@
          * data source
          */
         var data_sources = [{
-                "id": "label",
-                "name": "label",
+                "id": "-",
+                "name": "-",
                 "data": [{
                     "upc": "654321",
                     "productName": "Stuffed Animal Toy (Raccoon, 3ft)",
@@ -27,8 +27,12 @@
         jsreports.libraryPath = "lib/jsreports";
 
         // Load the report definition (here, a static file; in production, might be in a database)
-        $.getJSON("single-label-report-def.json", function(def) {
-            report_def = def;
+        var JasperReportDef = jsreports.integrations.jasper.JasperReportDef;
+        $.get("/jrxml/CIOMS_I.jrxml", function(jrxml) {
+        // Convert to jsreports format
+            report_def = JasperReportDef.fromJRXML(jrxml).jsrDef;
+            console.log(report_def);
+            //report_def = def;
             // Now that we have the definition, we can run the report
             report_instance = jsreports.render({
                 report_def: report_def,
