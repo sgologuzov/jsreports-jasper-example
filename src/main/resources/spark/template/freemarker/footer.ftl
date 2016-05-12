@@ -28,7 +28,7 @@
 
         // Load the report definition (here, a static file; in production, might be in a database)
         var JasperReportDef = jsreports.integrations.jasper.JasperReportDef;
-        $.get("/jrxml/CIOMS_I.jrxml", function(jrxml) {
+        $.get("/jrxml/FirstJasper.jrxml", function(jrxml) {
         // Convert to jsreports format
             report_def = JasperReportDef.fromJRXML(jrxml).jsrDef;
             console.log(report_def);
