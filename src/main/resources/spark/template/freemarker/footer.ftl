@@ -15,12 +15,26 @@
         var data_sources = [{
                 "id": "-",
                 "name": "-",
-                "data": [{
-                    "upc": "654321",
-                    "productName": "Stuffed Animal Toy (Raccoon, 3ft)",
-                    "price": 37.50,
-                    "qty": 5
-                }]
+                "data": [
+                    {
+                        "id": 1,
+                        "userName": "tmclure",
+                        "firstName": "Troy",
+                        "email": "tmclure@example.com"
+                    },
+                    {
+                        "id": 2,
+                        "userName": "mburns",
+                        "firstName": "Montgomery",
+                        "email": "mburns@example.com"
+                    },
+                    {
+                        "id": 2,
+                        "userName": "mburns",
+                        "firstName": "Montgomery",
+                        "email": "mburns@example.com"
+                    }
+                ]
             }];
 
         // To enable PDF download in IE9, set the path to the jsreports library
