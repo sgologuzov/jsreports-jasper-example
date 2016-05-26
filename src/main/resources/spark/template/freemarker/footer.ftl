@@ -5,14 +5,13 @@
     $(document).ready(function() {
 
         // Set up variables to hold the reporting objects
-        var report_def,
-            report_instance;
+        var reportDef;
 
         /**
          * We use a static data source with a single record for our label, by setting the "data" property of the
          * data source
          */
-        var data_sources = [{
+        var dataSources = [{
                 "id": "-",
                 "name": "-",
                 "data": [
@@ -43,37 +42,21 @@
         // Load the report definition (here, a static file; in production, might be in a database)
         var JasperReportDef = jsreports.integrations.jasper.JasperReportDef;
         $.get("/jrxml/test.jrxml", function(jrxml) {
-        // Convert to jsreports format
-            report_def = JasperReportDef.fromJRXML(jrxml).jsrDef;
-            console.log(report_def);
-            //report_def = def;
-            // Now that we have the definition, we can run the report
-            report_instance = jsreports.render({
-                report_def: report_def,
-                target: $(".report-output"),
-                datasets: data_sources
-            });
-        });
-
-        $(".edit-link").on("click", function() {
-
+            reportDef = JasperReportDef.fromJRXML(jrxml);
             // Initialize a designer to modify the report definition
             var designer = new jsreports.Designer({
-                data_sources: data_sources,
-                report_def: report_def
+                embedded: true,
+                container: $(".report-output"),
+                dataSources: [],
+                reportDef: reportDef
             });
 
-            // When the user clicks Save in the designer, refresh the rendering
-            $(designer).on("save", function(evt, reportdef) {
-                report_def = JSON.parse(reportdef);
-                $(".report-output").empty();
-                jsreports.render({
-                    report_def: report_def,
-                    target: $(".report-output"),
-                    datasets: data_sources
-                });
+            $(designer).on("save", function(evt, reportDef) {
+                var jrxml = designer.getJasperReport().toJRXML();
+                // ... send JRXML to server
             });
 
+            $(".download-link").on("click", function() {});
         });
 
         // Highlight example code snippets (not part of jsreports)

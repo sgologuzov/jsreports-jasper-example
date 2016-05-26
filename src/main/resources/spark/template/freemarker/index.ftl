@@ -11,7 +11,7 @@
 
   <hr />
 
-  <button class="btn edit-link">Edit the report</button>
+  <button class="btn download-link">Download JRXML</button>
 
   <div class="report-output"></div>
 </body>
